@@ -1,18 +1,12 @@
 import Category.*;
+import Category.Category.CATEGORY_NAME;
+import UnitSystem.*;
 
-import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.Hashtable;
 
+import static Unit.Unit.RoundTo3sf;
+
 public class Main {
-    enum CATEGORY_NAME
-    {
-        TEMPERATURE,
-        LENGTH,
-        VOLUME,
-        WEIGHT,
-    }
 
     private static Hashtable<CATEGORY_NAME, Category> categoryDictionary;
 
@@ -27,6 +21,28 @@ public class Main {
         Convert(CATEGORY_NAME.LENGTH, 23.5623, "Meter", "Foot");
         Convert(CATEGORY_NAME.VOLUME, 2234, "Tablespoon", "Liter");
         Convert(CATEGORY_NAME.WEIGHT, 10.7234, "Pound", "Gram");
+
+        TextParser textParser = new TextParser();
+
+        String[] cakeRecipe = new String[] {
+                "1 cup white sugar",
+                "0.5 cup unsalted butter",
+                "2 large eggs",
+                "2 tsp vanilla extracts",
+                "1.5 cup all-purpose flour",
+                "1.75 tsp baking powder",
+                "0.5 cup milk"
+        };
+
+        UnitSystem targetSystem = new UnitedKingdom();
+
+        System.out.println();
+        System.out.println("Recipe for White Cake:");
+
+        for(String item : cakeRecipe)
+        {
+            System.out.println(textParser.Parse(item, categoryDictionary, targetSystem));
+        }
     }
 
     public static void Convert(CATEGORY_NAME categoryName, double value, String inputUnit, String outputUnit)
@@ -39,9 +55,7 @@ public class Main {
             String outputSign = category.GetUnit(outputUnit).GetSign();
 
             double outputValue = category.Convert(value, inputUnit, outputUnit);
-            BigDecimal bd = new BigDecimal(outputValue);
-            bd = bd.setScale(3, RoundingMode.HALF_EVEN);
-            outputValue = bd.doubleValue();
+            outputValue = RoundTo3sf(value);
 
             System.out.println(value + " " + inputSign + " = " + outputValue + " " + outputSign);
         }
