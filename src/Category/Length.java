@@ -1,5 +1,7 @@
 package Category;
 
+import Unit.Unit;
+
 public class Length extends Category{
 
     public Length()

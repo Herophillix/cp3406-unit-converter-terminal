@@ -1,5 +1,7 @@
 package Category;
 
+import Unit.Unit;
+
 import java.util.Hashtable;
 
 public class Category {
@@ -12,11 +14,11 @@ public class Category {
         unitDictionary = new Hashtable<>();
     }
 
-    public String GetSign(String name)
+    public Unit GetUnit(String name)
     {
         if(unitDictionary.containsKey(name))
-            return unitDictionary.get(name).GetSign();
-        return "-None-";
+            return unitDictionary.get(name);
+        return null;
     }
 
     public double Convert(double value, String inputUnit, String outputUnit)

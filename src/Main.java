@@ -10,8 +10,8 @@ public class Main {
     {
         TEMPERATURE,
         LENGTH,
-        WEIGHT,
         VOLUME,
+        WEIGHT,
     }
 
     private static Hashtable<CATEGORY_NAME, Category> categoryDictionary;
@@ -20,13 +20,13 @@ public class Main {
         categoryDictionary = new Hashtable<>();
         categoryDictionary.put(CATEGORY_NAME.TEMPERATURE, new Temperature());
         categoryDictionary.put(CATEGORY_NAME.LENGTH, new Length());
-        categoryDictionary.put(CATEGORY_NAME.WEIGHT, new Weight());
         categoryDictionary.put(CATEGORY_NAME.VOLUME, new Volume());
+        categoryDictionary.put(CATEGORY_NAME.WEIGHT, new Weight());
 
         Convert(CATEGORY_NAME.TEMPERATURE, 234, "Celsius", "Fahrenheit");
         Convert(CATEGORY_NAME.LENGTH, 23.5623, "Meter", "Foot");
-        Convert(CATEGORY_NAME.WEIGHT, 10.7234, "Pound", "Gram");
         Convert(CATEGORY_NAME.VOLUME, 2234, "Tablespoon", "Liter");
+        Convert(CATEGORY_NAME.WEIGHT, 10.7234, "Pound", "Gram");
     }
 
     public static void Convert(CATEGORY_NAME categoryName, double value, String inputUnit, String outputUnit)
@@ -35,8 +35,8 @@ public class Main {
         {
             Category category = categoryDictionary.get(categoryName);
 
-            String inputSign = category.GetSign(inputUnit);
-            String outputSign = category.GetSign(outputUnit);
+            String inputSign = category.GetUnit(inputUnit).GetSign();
+            String outputSign = category.GetUnit(outputUnit).GetSign();
 
             double outputValue = category.Convert(value, inputUnit, outputUnit);
             BigDecimal bd = new BigDecimal(outputValue);
